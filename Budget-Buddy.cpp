@@ -8,11 +8,11 @@ struct Expense {
     string note;
 };
 
-// Helper function to clear the input buffer
+
 void clearInputBuffer() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
-// Helper to parse a single CSV line into an Expense struct
+
 bool parseExpense(const string& line, Expense& e) {
     if (line.empty()) return false;
     size_t p1 = line.find(',');
@@ -30,7 +30,7 @@ bool parseExpense(const string& line, Expense& e) {
     e.note = line.substr(p4 + 1);
     return true;
 }
-// Reads all expenses from the CSV file into a vector
+
 vector<Expense> readExpenses() {
     vector<Expense> expenses;
     ifstream file("expenses.csv");
@@ -46,7 +46,7 @@ vector<Expense> readExpenses() {
     file.close();
     return expenses;
 }
-// Get the next available ID
+
 int getNextID() {
     vector<Expense> expenses = readExpenses();
     if (expenses.empty()) {
@@ -54,7 +54,7 @@ int getNextID() {
     }
     return expenses.back().id + 1;
 }
-// Validate date format YYYY-MM-DD
+
 bool isValidDateFormat(const string& date) {
     if (date.length() != 10) return false;
     for (int i = 0; i < 10; i++) {
@@ -66,7 +66,7 @@ bool isValidDateFormat(const string& date) {
     }
     return true;
 }
-// Add an expense to the CSV
+
 void addExpense() {
     bool fileExists = false;
     ifstream checkFile("expenses.csv");
@@ -114,7 +114,7 @@ void addExpense() {
     file.close();
     cout << "Expense added successfully!\n";
 }
-// Print expenses from a given vector
+
 void printExpenses(const vector<Expense>& expenses, const string& header = "All Expenses") {
     if (expenses.empty()) {
         cout << "No expenses found.\n";
@@ -141,20 +141,20 @@ void printExpenses(const vector<Expense>& expenses, const string& header = "All 
     cout << "Total Expenses: " << fixed << setprecision(2) << total << endl;
 }
 
-// View all expenses
+
 void viewExpenses() {
     vector<Expense> expenses = readExpenses();
     printExpenses(expenses);
 }
 
-// Clear all expenses
+
 void clearExpenses() {
     ofstream file("expenses.csv", ios::trunc);
     file.close();
     cout << "All expenses cleared!\n";
 }
 
-// Flexible search function using a lambda
+
 void searchExpenses(const string& searchPrompt, const function<bool(const Expense&)>& predicate) {
     vector<Expense> allExpenses = readExpenses();
     vector<Expense> searchResults;
@@ -227,3 +227,4 @@ int main() {
 
     return 0;
 }
+
